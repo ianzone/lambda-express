@@ -1,0 +1,27 @@
+frameworkVersion: "3"
+configValidationMode: error
+
+service: my-service
+
+provider:
+  name: aws
+  architecture: arm64
+  runtime: nodejs20.x
+  httpApi:
+    cors: true
+  logRetentionInDays: 60
+
+functions:
+  api:
+    handler: handler.handler
+    events:
+      - httpApi:
+          method: any
+          path: /
+      - httpApi:
+          method: any
+          path: /{any+}
+
+plugins:
+  - serverless-esbuild
+  - serverless-offline
