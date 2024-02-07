@@ -13,7 +13,7 @@ provider:
 
 functions:
   api:
-    handler: handler.handler
+    handler: src/lambda.handler
     events:
       - httpApi:
           method: any
@@ -25,3 +25,8 @@ functions:
 plugins:
   - serverless-esbuild
   - serverless-offline
+
+custom:
+  esbuild:
+    minify: true
+    sourcemap: true

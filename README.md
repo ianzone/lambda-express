@@ -1,1 +1,1 @@
-# serverless-express
+# lambda-express
