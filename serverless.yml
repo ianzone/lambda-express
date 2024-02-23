@@ -7,20 +7,22 @@ provider:
   name: aws
   architecture: arm64
   runtime: nodejs20.x
+  memorySize: 512
+  timeout: 29
   httpApi:
-    cors: true
+    cors:
+      allowedOrigins: ["*"]
+      allowCredentials: true
   logRetentionInDays: 60
+  environment:
+    STAGE: "${sls:stage}"
+    NODE_OPTIONS: "--enable-source-maps"
 
 functions:
   api:
     handler: src/lambda.handler
     events:
-      - httpApi:
-          method: any
-          path: /
-      - httpApi:
-          method: any
-          path: /{any+}
+      - httpApi: "*"
 
 plugins:
   - serverless-esbuild
@@ -30,3 +32,4 @@ custom:
   esbuild:
     minify: true
     sourcemap: true
+    packager: "pnpm"
